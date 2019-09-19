@@ -1,3 +1,4 @@
+# vim: set ts=2 sw=2 sts=2 et:
 svg_ns = 'http://www.w3.org/2000/svg'
 xlink_ns = 'http://www.w3.org/1999/xlink'
 
@@ -76,7 +77,7 @@ init = (ctx) ->
         re.classList.remove 'shown'
 
     el.addEventListener 'click', do (el, num) -> ->
-      rect = $('rect', el).one()
+      rect = $('rect', el)[0] or $('circle', el)[0]
       show = rect.style.fill isnt ''
       rect.style.fill = if show then '' else 'transparent'
       for re in $('.serie-' + num + ' .reactive', ctx)
