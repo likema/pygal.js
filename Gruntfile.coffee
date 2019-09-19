@@ -1,8 +1,18 @@
+# vim: set ts=2 sw=2 sts=2 et:
 module.exports = (grunt) ->
   version = '2.0.x/'
 
   grunt.initConfig
     pkg: grunt.file.readJSON('package.json')
+
+    babel:
+      options:
+        sourceMap: false,
+        presets: ['@babel/preset-env']
+
+      dist:
+        files:
+          "2.0.x/pygal-tooltips.js": '.tmp/pygal-tooltips.js'
 
     uglify:
       options:
@@ -21,7 +31,7 @@ module.exports = (grunt) ->
         expand: true
         cwd: 'coffee'
         src: '*.coffee'
-        dest: version
+        dest: '.tmp'
         ext: '.js'
 
     coffeelint:
@@ -42,8 +52,9 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-contrib-uglify'
   grunt.loadNpmTasks 'grunt-coffeelint'
+  grunt.loadNpmTasks 'grunt-babel'
 
   grunt.registerTask 'dev', [
-    'coffeelint', 'coffee', 'watch']
+    'coffeelint', 'coffee', 'babel', 'watch']
   grunt.registerTask 'default', [
-    'coffeelint', 'coffee', 'uglify']
+    'coffeelint', 'coffee', 'babel', 'uglify']
